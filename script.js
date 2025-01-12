@@ -120,7 +120,9 @@ function createBtn(text){
 }
 
 function slideCard(){
-
+    const cardWidth=Math.max(400, Math.min(4*window.innerWidth/9, 800))+20;
+    const slider=document.querySelector(".slider");
+    slider.style.transform=`translateX(-${currCardIdx*cardWidth}px)`;
 }
 
 function initialiseVariables(){
