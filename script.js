@@ -30,7 +30,7 @@ function getIOContainer(cardIdx){
     const ioContainer=document.createElement("div");
     ioContainer.classList.add("io-container");
 
-    cardsInfo[cardIdx][2].forEach((fieldInfo)=>{
+    cardsInfo[cardIdx][2].forEach((fieldInfo, fieldIdx)=>{
         const label=document.createElement("label");
         label.for=fieldInfo[0];
         label.textContent=fieldInfo[1];
@@ -39,7 +39,10 @@ function getIOContainer(cardIdx){
         input.id=fieldInfo[0];
         input.name=fieldInfo[0];
         input.type=fieldInfo[2];
-        input.required=fieldInfo[3];
+
+        input.addEventListener("input",()=>{
+            validate[ cardsInfo[cardIdx][2][fieldIdx][0] ]();
+        });
 
         const errorSpan=document.createElement("span");
         errorSpan.classList.add("error-msg");
@@ -96,7 +99,7 @@ function createBackBtn(){
 function createNextBtn(){
     const nextBtn=createBtn("Next");
     nextBtn.addEventListener("click", (event)=>{
-        if(currCardIdx<cardsInfo.length-1){
+        if(currCardIdx<cardsInfo.length-1 && isCardValid()){
             currCardIdx++;
             slideCard();
         }
@@ -106,6 +109,11 @@ function createNextBtn(){
 
 function createSubmitBtn(){
     const submitBtn=createBtn("Submit");
+    submitBtn.addEventListener("click",(event)=>{
+        if(!isCardValid()){
+            event.preventDefault();
+        }
+    })
     return submitBtn;
 }
 
@@ -125,29 +133,146 @@ function slideCard(){
     slider.style.transform=`translateX(-${currCardIdx*cardWidth}px)`;
 }
 
+function isCardValid(){
+    let valid1, valid2;
+    switch(currCardIdx){
+        case 0:
+            valid1=validate[cardsInfo[0][2][0][0]]();
+            return valid1;
+        case 1:
+            valid1=validate[cardsInfo[1][2][0][0]]();
+            valid2=validate[cardsInfo[1][2][1][0]]();
+            return valid1 && valid2;
+        case 2:
+            valid1=validate[cardsInfo[2][2][0][0]]();
+            valid2=validate[cardsInfo[2][2][1][0]]();
+            return valid1 && valid2;
+    }
+}
+
+function initialiseValidates(){
+    validate={
+        [cardsInfo[0][2][0][0]]: //first-name
+        function(){
+            const firstName=document.querySelector(`#${cardsInfo[0][2][0][0]}`);
+            const errorSpan=document.querySelector(`#${cardsInfo[0][2][0][0]}-error`);
+            let isValid=false;
+            if(firstName.value.length==0){
+                errorSpan.textContent=`First Name is required`;
+                firstName.setCustomValidity(errorSpan.textContent);
+            }else if(firstName.value.length>maxFirstNameLen){
+                errorSpan.textContent=`First Name cannot have more than 30 characters`;
+                firstName.setCustomValidity(errorSpan.textContent);
+            }else{
+                firstName.setCustomValidity("");
+                errorSpan.textContent="";
+                isValid=true;
+            }
+            return isValid;
+        },
+        
+        [cardsInfo[1][2][0][0]]: //email
+        function(){ 
+            const email=document.querySelector(`#${cardsInfo[1][2][0][0]}`);
+            const errorSpan=document.querySelector(`#${cardsInfo[1][2][0][0]}-error`);
+            let isValid=false;
+            if(email.value==""){
+                errorSpan.textContent=`Email is required`;
+                email.setCustomValidity(errorSpan.textContent);
+            }else if(email.validity.typeMismatch){
+                errorSpan.textContent="Enter a valid email address";
+                email.setCustomValidity(errorSpan.textContent);
+            }else{
+                email.setCustomValidity("");
+                errorSpan.textContent="";
+                isValid=true;
+            }
+            return isValid;
+        },
+    
+        [cardsInfo[1][2][1][0]]: //phone-number
+        function(){ 
+            const phone=document.querySelector(`#${cardsInfo[1][2][1][0]}`);
+            const errorSpan=document.querySelector(`#${cardsInfo[1][2][1][0]}-error`);
+            let isValid=false;
+            if(phone.value==""){
+                errorSpan.textContent="Phone Number is required";
+                phone.setCustomValidity(errorSpan.textContent);
+            }else if(phone.value.length>10){
+                errorSpan.textContent="Enter a valid phone number";
+                phone.setCustomValidity(errorSpan.textContent);
+            }else{
+                phone.setCustomValidity("");
+                errorSpan.textContent="";
+                isValid=true;
+            }
+            return isValid;
+        },
+    
+        [cardsInfo[2][2][0][0]]: //password
+        function(){ 
+            const pass=document.querySelector(`#${cardsInfo[2][2][0][0]}`);
+            const errorSpan=document.querySelector(`#${cardsInfo[2][2][0][0]}-error`);
+            let isValid=false;
+            if(pass.value.length<6){
+                errorSpan.textContent="Password must have atleast 6 characters";
+                pass.setCustomValidity(errorSpan.textContent);
+            }else if(pass.value.length>30){
+                errorSpan.textContent="Password cannot have more than 30 characters";
+                pass.setCustomValidity(errorSpan.textContent);
+            }else{
+                pass.setCustomValidity("");
+                errorSpan.textContent="";
+                isValid=true;
+            }
+            return isValid;
+        },
+    
+        [cardsInfo[2][2][1][0]]: //confirm-password
+        function(){ 
+            const pass=document.querySelector(`#${cardsInfo[2][2][1][0]}`);
+            const errorSpan=document.querySelector(`#${cardsInfo[2][2][1][0]}-error`);
+            let isValid=false;
+            if(pass.validity.valueMissing){
+                errorSpan.textContent="Confirm Password is required";
+                pass.setCustomValidity(errorSpan.textContent);
+            }else if(pass.value!==document.querySelector("#password").value){
+                errorSpan.textContent="Does not matches the password";
+                pass.setCustomValidity(errorSpan.textContent);
+            }else{
+                pass.setCustomValidity("");
+                errorSpan.textContent="";
+                isValid=true;
+            }
+            return isValid;
+        },
+    }
+}
+
 function initialiseVariables(){
     //id, legend, [[field id, field label, field type, required?],]
     cardsInfo=[
         ["personal-info", "Personal Info", [
-            ["first-name", "First Name", "text", true],
-            ["last-name", "Last Name", "text", false]
+            ["first-name", "First Name", "text"],
+            ["last-name", "Last Name", "text"]
         ]],
         ["contact-info", "Contact Info", [
-            ["email", "Email", "email", true],
-            ["phone-number", "Phone Number", "number", true]
+            ["email", "Email", "email"],
+            ["phone-number", "Phone Number", "number"]
         ]],
         ["credentials-info", "Credentials Info", [
-            ["password", "Password", "password", true],
-            ["confirm-password", "Confirm Password", "password", true]
+            ["password", "Password", "password"],
+            ["confirm-password", "Confirm Password", "password"]
         ]],
     ];
 
     currCardIdx=0;
+    maxFirstNameLen=30;
 }
 
 function initialise(){
     initialiseVariables();
-
+    initialiseValidates();
     const signupForm=getSignUpForm();
 
     const cardContainer=document.querySelector("#card-container");
@@ -155,6 +280,8 @@ function initialise(){
 }
 
 let cardsInfo,
-    currCardIdx;
+    currCardIdx,
+    maxFirstNameLen,
+    validate;
 
 window.addEventListener("load", initialise);
