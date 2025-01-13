@@ -260,7 +260,7 @@ function initialiseVariables(){
             ["email", "Email", "email"],
             ["phone-number", "Phone Number", "number"]
         ]],
-        ["credentials-info", "Credentials Info", [
+        ["credentials-info", "Credentials", [
             ["password", "Password", "password"],
             ["confirm-password", "Confirm Password", "password"]
         ]],

@@ -4,6 +4,9 @@
     padding: 0px;
 }
 
+:root{
+    color: aliceblue;
+}
 .main-container{
     height: 100vh;
     width: 100vw;
@@ -17,10 +20,8 @@
     height: 100%;
     flex: 1;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    background-color: #272a39;
+    padding-top: 8px;
 }
 .side-img{
     max-width: 100%;
@@ -29,12 +30,19 @@
 
 #intro-para{
     width: clamp(400px, calc(400vw/9), 60ch);
+    text-align: center;
+    line-height: 1.5;
 }
 
 #card-container{
     width: clamp(400px, calc(400vw/9), 800px);
     height: 350px;
     overflow: hidden;
+    
+    background-color: aliceblue;
+    font-size: 24px;
+
+    border-radius: 16px;
 }
 
 .slider{
@@ -42,15 +50,135 @@
     min-height: 100%;
     display: flex;
     gap: 20px;
-
+    
     transition: transform 0.4s ease-in-out;
+    
+    color: #272a39;
 }
 
 .card{
     min-width: 100%;
     min-height: 100%;
+    
+    border: none;
+    padding: 72px clamp(15px, calc(5vw/3),24px) 16px clamp(15px, calc(5vw/3),24px);
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+legend{
+    position: absolute;
+    top: 16px;
+    border-bottom: 2px solid #272a39;
 }
 
+.io-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.input-container{
+    display: flex;
+    justify-content: space-between;
+}
+.field-container{
+    display: flex;
+    flex-direction: column;
+    
+    width: clamp(370px, calc(370vw/9), 500px);
+}
+.slider-btn-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.error-msg{
+    display: block;
+    height: 28px;
+    font-size: 12px;
+    color: #e56464;
+}
+input{
+    width: clamp(180px, calc(20vw), 280px);
+    padding: 8px;
+    font-size: 16px;
+    background-color: #fff;
+}
 input:invalid{
-    border: 2px solid red;
+    border: 2px solid #f5a5a5;
+}
+/* input:valid{
+    border: 2px solid #68df80;
+} */
+.form-nav-btn{
+    font-size: inherit;
+    color: inherit;
+    padding: 4px 16px;
+    
+    border-radius: 6px;
+    background-color: #b5b8c5;
+    border: 2px solid #272a39;
+}
+.next-btn{
+    background-color: #8686e7;
+    color: aliceblue;
+}
+.submit-btn{
+    background-color: #f5a5a5;
+}
+a{
+    text-decoration: none;
+    color: #f5a5a5;
+}
+
+.header-container{
+    display: flex;
+    justify-content: flex-end;
+}
+header{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+header>h1{
+    font-size: 48px;
+}
+.header-img{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header-img>img{
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    margin-right: 8px;
+}
+
+.intro-container{
+    display: flex;
+    justify-content: center;
+    
+    margin-top: 120px;
+}
+
+.card-outer-container{
+    display: flex;
+    justify-content: center;
+    
+    margin-top: 80px;
+}
+
+.login-outer-container{
+    display: flex;
+    justify-content: center;
+    
+    margin-top: 24px;
+}
+
+.login-container{
+    width: clamp(400px, calc(400vw/9), 800px);
 }
