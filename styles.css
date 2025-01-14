@@ -6,6 +6,7 @@
 
 :root{
     color: aliceblue;
+    background-color: #272a39;
 }
 .main-container{
     height: 100vh;
@@ -22,6 +23,10 @@
 
     background-color: #272a39;
     padding-top: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .side-img{
     max-width: 100%;
@@ -181,4 +186,9 @@ header>h1{
 
 .login-container{
     width: clamp(400px, calc(400vw/9), 800px);
+}
+footer{
+    /* background-color: #090c1a; */
+    color: aliceblue;
+    text-align: center;
 }
