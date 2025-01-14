@@ -2,11 +2,14 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    border: none;
 }
 
 :root{
     color: aliceblue;
     background-color: #272a39;
+
+    overflow-x: hidden;
 }
 .main-container{
     height: 100vh;
@@ -29,7 +32,7 @@
     justify-content: space-between;
 }
 .side-img{
-    max-width: 100%;
+    /* max-width: 100%; */
     max-height: 100%;
 }
 
@@ -41,7 +44,7 @@
 
 #card-container{
     width: clamp(400px, calc(400vw/9), 800px);
-    height: 350px;
+    height: clamp(240px ,40vh, 360px);
     overflow: hidden;
     
     background-color: aliceblue;
@@ -66,7 +69,9 @@
     min-height: 100%;
     
     border: none;
-    padding: 72px clamp(15px, calc(5vw/3),24px) 16px clamp(15px, calc(5vw/3),24px);
+    /* 300px to 900px */
+    padding: clamp(24px ,8vh ,72px) clamp(15px, calc(5vw/3),24px) clamp(0px ,3vh ,16px) clamp(15px, calc(5vw/3),24px);
+    /* padding: 72px clamp(15px, calc(5vw/3),24px) 16px clamp(15px, calc(5vw/3),24px); */
     position: relative;
     
     display: flex;
@@ -75,7 +80,7 @@
 }
 legend{
     position: absolute;
-    top: 16px;
+    top: clamp(0px ,5vh/3 ,16px);
     border-bottom: 2px solid #272a39;
 }
 
@@ -108,15 +113,22 @@ legend{
 input{
     width: clamp(180px, calc(20vw), 280px);
     padding: 8px;
+    padding-top: clamp(2px ,calc(8vh/9) ,8px);
+    padding-bottom: clamp(2px ,calc(8vh/9) ,8px);
     font-size: 16px;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: inherit;
+    height: clamp(24px, 4vh, 38px);
+
+    border-bottom: 2px solid #272a39;
 }
 input:invalid{
-    border: 2px solid #f5a5a5;
+    border-bottom: 2px solid #f5a5a5;
 }
-/* input:valid{
-    border: 2px solid #68df80;
-} */
+input:focus{
+    border: none;
+}
+
 .form-nav-btn{
     font-size: inherit;
     color: inherit;
@@ -124,7 +136,7 @@ input:invalid{
     
     border-radius: 6px;
     background-color: #b5b8c5;
-    border: 2px solid #272a39;
+    /* border: 2px solid #272a39; */
 }
 .next-btn{
     background-color: #8686e7;
@@ -160,21 +172,23 @@ header>h1{
     width: 48px;
     height: 48px;
     border-radius: 100%;
-    margin-right: 8px;
+    margin-right: 16px;
+    border: 2px solid aliceblue;
 }
 
 .intro-container{
     display: flex;
     justify-content: center;
     
-    margin-top: 120px;
+    /* 240px to  900px*/
+    margin-top: clamp(32px,40vh/3,120px);
 }
 
 .card-outer-container{
     display: flex;
     justify-content: center;
     
-    margin-top: 80px;
+    margin-top: clamp(64px/3, 80vh/9,80px);
 }
 
 .login-outer-container{
@@ -188,7 +202,9 @@ header>h1{
     width: clamp(400px, calc(400vw/9), 800px);
 }
 footer{
-    /* background-color: #090c1a; */
     color: aliceblue;
     text-align: center;
+}
+footer h1{
+    font-size: min(clamp(12px, 2.5vw, 36px), clamp(12px, 5vh, 36px));
 }
