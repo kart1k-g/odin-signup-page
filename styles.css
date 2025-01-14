@@ -232,3 +232,15 @@ footer h1{
 .initial-error-span{
     color: #272a39;
 }
+
+/* For Chrome, Edge, and Safari */
+#phone-number::-webkit-inner-spin-button,
+#phone-number::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+#phone-number{
+    -moz-appearance: textfield;
+}
