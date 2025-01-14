@@ -81,7 +81,7 @@
 legend{
     position: absolute;
     top: clamp(0px ,5vh/3 ,16px);
-    border-bottom: 2px solid #272a39;
+    /* border-bottom: 2px solid #272a39; */
 }
 
 .io-container{
@@ -128,7 +128,13 @@ input:invalid{
 input:focus{
     border: none;
 }
-
+.valid-input{
+    border-bottom: 2px solid #68df80;
+}
+.label-span{
+    display: block;
+    font-size: 12px;
+}
 .form-nav-btn{
     font-size: inherit;
     color: inherit;
@@ -136,7 +142,6 @@ input:focus{
     
     border-radius: 6px;
     background-color: #b5b8c5;
-    /* border: 2px solid #272a39; */
 }
 .next-btn{
     background-color: #8686e7;
@@ -207,4 +212,8 @@ footer{
 }
 footer h1{
     font-size: min(clamp(12px, 2.5vw, 36px), clamp(12px, 5vh, 36px));
+}
+
+.initial-error-span{
+    color: #272a39;
 }

@@ -43,7 +43,7 @@ function getIOContainer(cardIdx){
         input.addEventListener("input",()=>{
             validate[ cardsInfo[cardIdx][2][fieldIdx][0] ]();
         });
-
+        
         const errorSpan=document.createElement("span");
         errorSpan.classList.add("error-msg");
         errorSpan.id=`${fieldInfo[0]}-error`;
@@ -52,20 +52,30 @@ function getIOContainer(cardIdx){
         inputContainer.classList.add("input-container");
         inputContainer.appendChild(label);
         inputContainer.appendChild(input);
-
+        
         const errorContainer=document.createElement("div");
         errorContainer.classList.add("error-container");
         errorContainer.appendChild(errorSpan);
-
+        
         const fieldContainer=document.createElement("div");
         fieldContainer.classList.add("field-container");
         fieldContainer.appendChild(inputContainer);
         fieldContainer.appendChild(errorContainer);
-
+        
         ioContainer.appendChild(fieldContainer);
+        setRequiredLabel(errorSpan, fieldInfo[3]);
     });
-
+    
     return ioContainer;
+}
+
+function setRequiredLabel(errorSpan, isRequired){
+    if(isRequired){
+        errorSpan.textContent="Required";
+    }else{
+        errorSpan.textContent="Optional";
+    }
+    errorSpan.classList.add("initial-error-span");
 }
 
 function getSliderBtnContainer(cardIdx){
@@ -160,15 +170,40 @@ function initialiseValidates(){
             if(firstName.value.length==0){
                 errorSpan.textContent=`First Name is required`;
                 firstName.setCustomValidity(errorSpan.textContent);
-            }else if(firstName.value.length>maxFirstNameLen){
+            }else if(firstName.value.trim().length==0){
+                errorSpan.textContent=`Whitespaces will be trimmed`;
+                firstName.setCustomValidity(errorSpan.textContent);
+            }else if(firstName.value.trim().length>maxFirstNameLen){
                 errorSpan.textContent=`First Name cannot have more than 30 characters`;
                 firstName.setCustomValidity(errorSpan.textContent);
             }else{
                 firstName.setCustomValidity("");
                 errorSpan.textContent="";
                 isValid=true;
+                firstName.classList.add("valid-input");
+            }
+            if(!isValid){
+                errorSpan.classList.remove("initial-error-span");
             }
             return isValid;
+        },
+
+        [cardsInfo[0][2][1][0]]: //last-name
+        function(){
+            const lastName=document.querySelector(`#${cardsInfo[0][2][1][0]}`);
+            const errorSpan=document.querySelector(`#${cardsInfo[0][2][1][0]}-error`);
+            if(lastName.value.length==0){
+                lastName.classList.remove("valid-input");
+                errorSpan.classList.add("initial-error-span");
+                errorSpan.textContent="Optional";
+            }else if(lastName.value.trim().length==0){
+                errorSpan.textContent="Whitespaces will be trimmed";
+                errorSpan.classList.remove("initial-error-span");
+            }else{
+                lastName.classList.remove("valid-input");
+            }
+            
+            return true;
         },
         
         [cardsInfo[1][2][0][0]]: //email
@@ -186,6 +221,10 @@ function initialiseValidates(){
                 email.setCustomValidity("");
                 errorSpan.textContent="";
                 isValid=true;
+                email.classList.add("valid-input");
+            }
+            if(!isValid){
+                errorSpan.classList.remove("initial-error-span");
             }
             return isValid;
         },
@@ -205,6 +244,10 @@ function initialiseValidates(){
                 phone.setCustomValidity("");
                 errorSpan.textContent="";
                 isValid=true;
+                phone.classList.add("valid-input");
+            }
+            if(!isValid){
+                errorSpan.classList.remove("initial-error-span");
             }
             return isValid;
         },
@@ -224,6 +267,10 @@ function initialiseValidates(){
                 pass.setCustomValidity("");
                 errorSpan.textContent="";
                 isValid=true;
+                pass.classList.add("valid-input");
+            }
+            if(!isValid){
+                errorSpan.classList.remove("initial-error-span");
             }
             return isValid;
         },
@@ -243,6 +290,10 @@ function initialiseValidates(){
                 pass.setCustomValidity("");
                 errorSpan.textContent="";
                 isValid=true;
+                pass.classList.add("valid-input");
+            }
+            if(!isValid){
+                errorSpan.classList.remove("initial-error-span");
             }
             return isValid;
         },
@@ -253,16 +304,16 @@ function initialiseVariables(){
     //id, legend, [[field id, field label, field type, required?],]
     cardsInfo=[
         ["personal-info", "Personal Info", [
-            ["first-name", "First Name", "text"],
-            ["last-name", "Last Name", "text"]
+            ["first-name", "First Name", "text", true],
+            ["last-name", "Last Name", "text", false]
         ]],
         ["contact-info", "Contact Info", [
-            ["email", "Email", "email"],
-            ["phone-number", "Phone Number", "number"]
+            ["email", "Email", "email", true],
+            ["phone-number", "Phone Number", "number", true]
         ]],
         ["credentials-info", "Credentials", [
-            ["password", "Password", "password"],
-            ["confirm-password", "Confirm Password", "password"]
+            ["password", "Password", "password", true],
+            ["confirm-password", "Confirm Password", "password", true]
         ]],
     ];
 
