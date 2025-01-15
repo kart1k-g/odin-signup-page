@@ -131,7 +131,7 @@ function createBtn(text){
     const btn=document.createElement("button");
     btn.classList.add(`${text.toLowerCase()}-btn`);
     btn.classList.add("form-nav-btn");
-    btn.textContent=text;
+    btn.textContent=text=="Submit"?"Create Account": text;
     btn.type=text==="Submit"?"submit":"button";
 
     return btn;
@@ -200,7 +200,7 @@ function initialiseValidates(){
                 errorSpan.textContent="Whitespaces will be trimmed";
                 errorSpan.classList.remove("initial-error-span");
             }else{
-                lastName.classList.remove("valid-input");
+                lastName.classList.add("valid-input");
             }
             
             return true;

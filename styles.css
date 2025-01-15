@@ -109,6 +109,7 @@ legend{
     height: 28px;
     font-size: 12px;
     color: #e56464;
+    margin-top: -3px;
 }
 input{
     width: clamp(180px, calc(20vw), 280px);
@@ -149,6 +150,7 @@ input:focus{
 }
 .submit-btn{
     background-color: #f5a5a5;
+    color: aliceblue;
 }
 a{
     text-decoration: none;
@@ -243,4 +245,8 @@ footer h1{
 /* For Firefox */
 #phone-number{
     -moz-appearance: textfield;
+}
+
+h1, legend, label, span, button, img{
+    user-select: none;
 }
